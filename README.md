@@ -26,6 +26,7 @@
 	cd ~/prometheus-install/
 	git clone https://github.com/learncloud/install-prometheus-5.0.git
 	cd install-prometheus-5.0/
+	
 	```
 
 ## 폐쇄망 구축 가이드
