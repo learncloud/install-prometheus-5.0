@@ -59,6 +59,65 @@
 	sudo wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 -O /usr/bin/yq
 	```
 * yq bin 파일을 각 마스터의 /usr/bin/으로 복사한다.
+
+- prometheus StorageClass 마운트 설정 (하단 install.sh실행 이전 필수 수정)
+`vi ~/install-prometheus-5.0/yaml/manifests/prometheus-prometheus.yaml`
+
+```bash
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  labels:
+    prometheus: k8s
+  name: k8s
+  namespace: monitoring
+spec:
+  storage:
+    volumeClaimTemplate:
+      spec:
+        accessModes: [ "ReadWriteMany" ]
+        resources:
+          requests:
+            storage: 10Gi
+	#아래 storageClassName: csi-rbd-sc가 주석으로 되어있는데 내 storage(=nfs)를 지정해주면됩니다
+        storageClassName: nfs
+  alerting:
+    alertmanagers:
+    - name: alertmanager-main
+      namespace: monitoring
+      port: web
+
+	###아래 image는 내 repo를 참고해서 다운 및 생성되기때문에 
+	##quay.io/prometheus/prometheus:v2.11.0를
+	#192.168.178.17:5000/prometheus/prometheus:v2.11.0로 변경
+	
+  image: quay.io/prometheus/prometheus:{PROMETHEUS_VERSION} # install.sh 스크립트를 돌리면 해당부분이 자동으로 아래와 같이 변환됨 
+  #image: 192.168.178.17:5000/prometheus/prometheus:v2.11.0 # registry에 프로메테우스가 존재할 경우에는 quay.io부분을 local repo로 바꿔도 됩니다
+  nodeSelector: 
+    kubernetes.io/os: linux
+  podMonitorSelector: {}
+  podMonitorNamespaceSelector: {}
+  replicas: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 2Gi
+  ruleSelector:
+    matchLabels:
+      prometheus: k8s
+      role: alert-rules
+  securityContext:
+    fsGroup: 2000
+    runAsNonRoot: true
+    runAsUser: 1000
+  serviceAccountName: prometheus-k8s
+  serviceMonitorNamespaceSelector: {}
+  serviceMonitorSelector: {}
+  version: {PROMETHEUS_VERSION}
+```
+
+
+
 ## Step 1. installer 실행
 * 목적 : `설치를 위한 shell script 실행`
 * 순서: 
