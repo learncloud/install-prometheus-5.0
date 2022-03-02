@@ -58,9 +58,14 @@
 	yum install -y wget
 	sudo wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 -O /usr/bin/yq
 	```
+	
+	
 * yq bin 파일을 각 마스터의 /usr/bin/으로 복사한다.
+* 
 
-- prometheus StorageClass 마운트 설정 (하단 install.sh실행 이전 필수 수정)
+  * prometheus StorageClass 마운트 설정 (하단 install.sh실행 이전 필수 수정)
+
+
 `vi ~/install-prometheus-5.0/yaml/manifests/prometheus-prometheus.yaml`
 
 ```bash
