@@ -125,6 +125,9 @@ spec:
 * 순서: 
 	* 권한 부여 및 실행
 	``` bash
+	# install.sh내 registry주소(master ip:5000)를 필요로 하는 문장이 존재하므로 여기서 사전 작업 필요
+	export REGISTRY=192.168.178.17:5000
+	
 	chmod +x install.sh
 	./install.sh
 	```
