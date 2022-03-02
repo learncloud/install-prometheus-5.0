@@ -21,13 +21,13 @@
 		* version.conf 에 알맞는 버전과 registry 정보를 입력한다.
 
 ## 설치에  필요한 파일 다운로드
-	```bash
+	
 	mkdir -p ~/prometheus-install
 	cd ~/prometheus-install/
 	git clone https://github.com/learncloud/install-prometheus-5.0.git
 	cd install-prometheus-5.0/
 	
-	```
+	
 
 ## 폐쇄망 구축 가이드
 * 외부 네트워크 통신이 가능한 환경에서 setImg.sh를 이용 하여 이미지 및 패키지를 다운로드 받고 local Repository에 푸쉬한다.
