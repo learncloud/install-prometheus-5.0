@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: promscale
+  namespace: monitoring
+  labels:
+    app: promscale
+spec:
+  type: NodePort
+  ports:
+    - port: 9201
+  selector:
+    app: promscale
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: promscale-connector
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: promscale
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: promscale
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: ck4-1
+      containers:
+        - name: promscale-connector
+          imagePullPolicy: IfNotPresent
+          image: timescale/promscale:0.1.2
+          args:
+            - "-db-user=$USER_ID"
+            - "-db-host=$POSTGRE_SVC_IP"
+            - "-db-port=5432"
+            - "-db-name=postgres"
+            - "-db-password=$(PROMSCALE_DB_PASSWORD)"
+            - "-db-ssl-mode=disable"
+          ports:
+            - containerPort: 9201
+          env:
+          - name: PROMSCALE_DB_PORT
+            value: "5432"
+          - name: PROMSCALE_LEADER_ELECTION_PG_ADVISORY_LOCK_ID
+            value: "1"
+          - name: PROMSCALE_LEADER_ELECTION_PG_ADVISORY_LOCK_PROMETHEUS_TIMEOUT
+            value: 30s
+          - name: PROMSCALE_LOG_LEVEL
+            value: info
+          - name: PROMSCALE_DB_CONNECT_RETRIES
+            value: "10"
+          - name: PROMSCALE_DB_HOST
+            value: postgres-servicie.monitoring.svc
+          - name: PROMSCALE_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: POSTGRES_PASSWORD
+          - name: PROMSCALE_WEB_TELEMETRY_PATH
+            value: "/metrics-text"
+          - name: PROMSCALE_DB_SSL_MODE
+            value: allow
+          - name: POSTGRES_DB
+            value: postgres
+          - name: POSTGRES_DB_USER
+            value: $USER_ID
+
+
