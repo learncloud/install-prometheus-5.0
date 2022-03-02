@@ -22,8 +22,7 @@
 
 ## 설치에  필요한 파일 다운로드
 	
-	mkdir -p ~/prometheus-install
-	cd ~/prometheus-install/
+	cd ~
 	git clone https://github.com/learncloud/install-prometheus-5.0.git
 	cd install-prometheus-5.0/
 	
