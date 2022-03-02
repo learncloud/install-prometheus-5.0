@@ -44,7 +44,7 @@
 
 	# prometheus 설치에 필요한 이미지를 다운해 registry에 push 
 	./set-prometheus-Img.sh
-	./setImg.sh
+	./set-prometheus-Img.sh
 	
 	```
 * 폐쇄망 설치 스크립트 실행순서
