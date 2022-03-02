@@ -158,3 +158,18 @@ spec:
 * kube-system namespace에 있는 모든 kube-schduler pod의 spec.container.command에서 --port=0 삭제
 * kube-system namespace에 있는 모든 kube-contoroller-manager pod의 spec.container.command에서 --port=0 삭제
 
+### 삭제 방법
+
+- 목적 : `설치를 위한 shell script 실행`
+- 순서:
+    - 권한 부여 및 실행
+	```bash
+	chmod +x uninstall.sh
+
+	./uninstall.sh
+	
+	```
+
+
+
+
