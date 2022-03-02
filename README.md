@@ -119,6 +119,8 @@ spec:
   version: {PROMETHEUS_VERSION}
 ```
 
+![image](figure/prometheus-config.png)
+
 
 
 ## Step 1. installer 실행
@@ -132,6 +134,18 @@ spec:
 	chmod +x install.sh
 	./install.sh
 	```
+
+
+## 결과화면
+
+![image](figure/get-pod.png)
+
+![image](figure/get-svc.png)
+
+
+* `{masterIP}:{nodeport}`실행 결과
+
+![image](figure/show-pro.png)
 
 
 ## Step 2. kube-scheduler, kube-controller-manager,  etcd 설정 ( Sub master의 user와 password를 모를 시)
