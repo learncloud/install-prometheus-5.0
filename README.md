@@ -33,20 +33,30 @@
 	
 * 외부 네트워크 환경 스크립트 실행 순서 (**현재 이 버전으로 진행중**)
 	```bash
-	chmod +x version.conf
-	source version.conf
-	chmod +x setImg.sh
+	# .conf 파일을 사용할수 있도록 권한 변경
+	chmod +x prometheus-version.conf
+
+	# prometheus 설치 이전, version설정 진행 (source = 파일을 실행하는 명령어)
+	source prometheus-version.conf
+
+	# .sh 파일을 사용할수 있도록 권한 변경
+	chmod +x set-prometheus-Img.sh
+
+	# prometheus 설치에 필요한 이미지를 다운해 registry에 push 
+	./set-prometheus-Img.sh
 	./setImg.sh
+	
 	```
 * 폐쇄망 설치 스크립트 실행순서
 	```bash
-	source version.conf
-	chmod +x version.conf
-	chmod +x setLocalReg.sh
-	./setLocalReg.sh
+	source prometheus-version.conf
+	chmod +x prometheus-version.conf
+	chmod +x set-prometheus-LocalReg.sh
+	./set-prometheus-LocalReg.sh
 	```
 * 외부 통신이 가능한 환경에서 yq 패키지를 다운받는다. 
 	```bash
+	yum install -y wget
 	sudo wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 -O /usr/bin/yq
 	```
 * yq bin 파일을 각 마스터의 /usr/bin/으로 복사한다.
