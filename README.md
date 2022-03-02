@@ -62,6 +62,7 @@
 	```
 	
 
+
 * prometheus StorageClass 마운트 설정 (하단 install.sh실행 이전 필수 수정)
 
 `vi ~/install-prometheus-5.0/yaml/manifests/prometheus-prometheus.yaml`
