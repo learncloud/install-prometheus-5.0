@@ -67,6 +67,9 @@
 `vi ~/install-prometheus-5.0/yaml/manifests/prometheus-prometheus.yaml`
 
 ```bash
+sed -i 's/${REGISTRY}/172.21.2.201:5000/g' prometheus-prometheus.yaml
+
+
 # 윗 내용 생략
 ########
 	#아래 storageClassName: csi-rbd-sc가 주석으로 되어있는데 내 storage(=nfs)를 지정해주면됩니다
